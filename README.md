@@ -13,3 +13,11 @@
     - util/xs                命令行工具统一入口
 
  - 在开始编写您的代码前强烈建议执行 util/RequireCheck.php 以检查环境。
+
+# 安装
+ - 本包虽然针对laravel5.*框架进行封装，当其他框架同样可以使用。
+ ## 安装方法 1：
+
+   composer require shaozeming/xunsearch-laravel
+
+直接运行composer自动安装代码。
