@@ -11,10 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5.9",
-        "illuminate/support": "5.1.*|5.2.*",
-        "ext-mbstring": "*",
-        "lib-pcre": "*"
+        "php": ">=5.3"
     },
     "autoload": {
         "psr-4": {
