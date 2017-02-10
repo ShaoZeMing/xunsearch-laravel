@@ -13,7 +13,7 @@ class Search
 {
     public static function info()
     {
-        echo "这是自定义的Search  clas<br />";
+        echo "这是自定的Search  clas<br />";
     }
 
 }
