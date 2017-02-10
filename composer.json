@@ -1,0 +1,28 @@
+{
+    "name": "shaozeming/xunsearch-laravel",
+    "description": "基于XunSearch（讯搜）sdk的Eloquent模型的全文搜索Laravel 5.*软件包，支持全拼，拼音简写，模糊搜索。",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "shaozeming",
+            "email": "szm19920426@gmail.com",
+            "homepage": "http://www.4d4k.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "5.1.*|5.2.*",
+        "ext-mbstring": "*",
+        "lib-pcre": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "shaozeming\\xunsearch\\": "src/wrapper"
+        },
+        "classmap": ["src/lib/"]
+    },
+    "bin": [
+        "util/xs"
+    ]
+}
