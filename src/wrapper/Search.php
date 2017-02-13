@@ -8,12 +8,125 @@
 
 namespace shaozeming\xunsearch;
 
-
-class Search
+/**
+ * 封装所有功能类
+ *
+ * @author shaozeming
+ * @link http://www.4d4k.com/
+ * @version $Id$
+ */
+class Search extends \XS
 {
-    public static function info()
+    public $count;
+    protected $config = [
+        //索引配置
+        'flushIndex' => true,    //立即刷新索引
+        //搜索配置
+        'setFuzzy' => true,      //开启模糊搜索
+        'autoSynonyms' => true,  //开启自动同义词搜索功能
+    ];
+
+    public function __construct($file, array $config = null)
     {
-        echo "这是自定的Search  clas<br />";
+        parent::__construct($file);
+        $this->config = $config;
     }
 
+    /**
+     * 添加索引数据
+     *
+     * @author shaozeming@xiaobaiyoupin.com
+     * $data array  一维||二维
+     * @return mixed
+     */
+    public function addIndex(array $data)
+    {
+        if (!array($data)) {
+            die('参数错误！');
+        }
+        if (count($data) == count($data, 1)) {
+            // 一维数组
+            $this->getIndex()->add(new \XSDocument($data));
+        } else {
+            // 多维数组
+            foreach ($data as $v) {
+                $this->getIndex()->add(new \XSDocument($v));
+            }
+        }
+
+        //索引是否立即生效
+        if($this->config['flushIndex']){
+            $this->getIndex()->flushIndex();
+        }
+
+        return $this->getIndex();
+    }
+
+    /**
+     * 添加索引数据
+     *
+     * @author shaozeming@xiaobaiyoupin.com
+     * $string string
+     * @return mixed
+     */
+    public function searchAll($string)
+    {
+        if (!is_string($string)) {
+            die('参数错误！');
+        }
+       // other variable maybe used in tpl
+        $count = $total = $search_cost = 0;
+        $doc = $related = $corrected = $hot = [];
+        $total_begin = microtime(true);
+        $search = $this->getSearch();
+
+        //热门词汇
+        $hot = $search->getHotQuery();
+
+        // fuzzy search 模糊搜索
+        $search->setFuzzy($this->config['setFuzzy']);
+
+        // synonym search
+        $search->setAutoSynonyms($this->config['autoSynonyms']);
+
+        // set query
+        $search->setQuery($string);
+
+        // get the result
+        $search_begin = microtime(true);
+        $doc = $search->search();
+        $search_cost = microtime(true) - $search_begin;
+
+        // get other result
+        $count = $search->getLastCount();    //最近一次搜索结果数
+        $total = $search->getDbTotal();      //数据库总数
+
+//            $corrected = $this->getSearch()->getCorrectedQuery();      //模糊词
+//            if (count($doc) < 10) {
+//                foreach ($corrected as $v) {
+//                    $doc = array_merge($doc, $this->getSearch()->search($v));
+//                }
+//
+
+        // try to corrected, if resul too few
+        if ($count < 1 || $count < ceil(0.001 * $total)) {
+            $corrected = $search->getCorrectedQuery();
+        }
+        // get related query
+        $related = $search->getRelatedQuery();
+
+        //统计模糊搜索结果。
+        $this->count = count($doc);
+        return [
+            'doc' => $doc,                    //搜索数据结果文档
+            'hot' => $hot,                    //热门词汇
+            'searchTime' => $search_cost,    //搜索所用时间
+            'count' => $count,               //搜索结果统计
+            'total' => $total,               //数据库总数据
+            'corrected' => $corrected,      //搜索提示
+            'related' => $related,          //相关搜索
+        ];
+
+
+    }
 }
