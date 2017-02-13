@@ -18,8 +18,5 @@
             "shaozeming\\xunsearch\\": "src/wrapper"
         },
         "classmap": ["src/lib/"]
-    },
-    "bin": [
-        "util/xs"
-    ]
+    }
 }

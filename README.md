@@ -16,8 +16,21 @@
 
 # 安装
  - 本包虽然针对laravel5.*框架进行封装，当其他框架同样可以使用。
- ## 安装方法 1：
+## 方法 1：
 
-   composer require shaozeming/xunsearch-laravel
+   composer require shaozeming/xunsearch-laravel "dev-master"
 
 直接运行composer自动安装代码。
+
+## 方法 2：
+在项目根目录的下composer.json文件中添加代码<`shaozeming/xunsearch-laravel": "dev-master`>
+
+     "require": {
+            "php": ">=5.6.4",
+            "laravel/framework": "5.3.*",
+            "predis/predis": "^1.1",
+            "zizaco/entrust": "5.2.x-dev",
+            "shaozeming/xunsearch-laravel": "dev-master"
+        },
+
+添加在 require 中。然后执行命令：~composer update~。
