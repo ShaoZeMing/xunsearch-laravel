@@ -11,7 +11,7 @@ namespace shaozeming\xunsearch;
 /**
  * 封装所有功能类
  *
- * @author shaozeming
+ * @author szm19920426@gmail.com
  * @link http://www.4d4k.com/
  * @version $Id$
  */
@@ -26,16 +26,19 @@ class Search extends \XS
         'autoSynonyms' => true,  //开启自动同义词搜索功能
     ];
 
-    public function __construct($file, array $config = null)
+    public function __construct($file, array $config = [])
     {
         parent::__construct($file);
-        $this->config = $config;
+
+        if(!empty($config)){
+            $this->config = array_merge($this->config,$config);
+        }
     }
 
     /**
      * 添加索引数据
      *
-     * @author shaozeming@xiaobaiyoupin.com
+     * @author szm19920426@gmail.com
      * $data array  一维||二维
      * @return mixed
      */
@@ -55,7 +58,7 @@ class Search extends \XS
         }
 
         //索引是否立即生效
-        if($this->config['flushIndex']){
+        if ($this->config['flushIndex']) {
             $this->getIndex()->flushIndex();
         }
 
@@ -65,7 +68,7 @@ class Search extends \XS
     /**
      * 添加索引数据
      *
-     * @author shaozeming@xiaobaiyoupin.com
+     * @author szm19920426@gmail.com
      * $string string
      * @return mixed
      */
@@ -74,7 +77,7 @@ class Search extends \XS
         if (!is_string($string)) {
             die('参数错误！');
         }
-       // other variable maybe used in tpl
+        // other variable maybe used in tpl
         $count = $total = $search_cost = 0;
         $doc = $related = $corrected = $hot = [];
         $total_begin = microtime(true);
@@ -114,17 +117,17 @@ class Search extends \XS
         }
         // get related query
         $related = $search->getRelatedQuery();
+        $total_cost = microtime(true) - $total_begin;
 
-        //统计模糊搜索结果。
-        $this->count = count($doc);
         return [
             'doc' => $doc,                    //搜索数据结果文档
             'hot' => $hot,                    //热门词汇
-            'searchTime' => $search_cost,    //搜索所用时间
             'count' => $count,               //搜索结果统计
             'total' => $total,               //数据库总数据
             'corrected' => $corrected,      //搜索提示
             'related' => $related,          //相关搜索
+            'search_cost' => $search_cost,   //搜索所用时间
+            'total_cost' => $total_cost,     //页面所用时间
         ];
 
 
