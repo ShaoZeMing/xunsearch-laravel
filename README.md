@@ -40,7 +40,7 @@
  - 在开始编写您的代码前强烈建议执行 util/RequireCheck.php 以检查环境。
 
 # 安装本包
- - 本包虽然针对laravel5.*框架进行封装，当其他框架同样可以使用。
+ - 本包虽然针对laravel5.*框架进行封装，当然其他带composer框架同样可以使用。
 
 ## 方法 1：
 执行命令
@@ -61,3 +61,58 @@
         },
 
 添加在 require 中。然后执行命令：`composer update`。
+
+## 使用说明
+本包为了方便使用而生，我将所有几种搜索结果统一封装到类文件wrapper/Search.php 中。对官方SDK文档不熟者也可以快速使用。
+
+文件wrapper/Search.php 类继承核心`XS`类,包好所有`XS`类所有方法属性。如未满足你的需求，可根据官方文档进行自定义。
+目前添加属性，方法（持续维护添加）：
+
+属性$config
+
+    protected $config = [
+        'flushIndex'     => true,       //立即刷新索引
+        'setFuzzy'       => true,       //开启模糊搜索
+        'autoSynonyms'   => true,       //开启自动同义词搜索功能
+    ];
+
+构造方法:public function __construct($file, array $config = [])
+
+        /**
+        * 添加索引数据
+        * @author szm19920426@gmail.com
+        * $file string  @object@.ini文件
+        * $config array  配置数组,参考属性$config
+        */
+
+添加索引方法：public object addIndex(array $data)
+
+        /**
+         * 添加索引数据
+         *
+         * @author szm19920426@gmail.com
+         * $data array  一维||二维
+         * @return object Index索引对象
+         */
+
+搜索方法 public function searchAll($string)
+
+        /**
+         * 搜索方法
+         *
+         * @author szm19920426@gmail.com
+         * $string string  待搜索字符串
+         * @return array  返回数组
+           return [
+                     'doc'           => $doc,                    //搜索数据结果文档
+                     'hot'           => $hot,                    //热门词汇
+                     'count'         => $count,                  //搜索结果统计
+                     'total'         => $total,                  //数据库总数据
+                     'corrected'     => $corrected,             //搜索提示
+                     'related'       => $related,               //相关搜索
+                     'search_cost'   => $search_cost,          //搜索所用时间
+                     'total_cost'    => $total_cost,           //页面所用时间
+                 ];
+         */
+
+
