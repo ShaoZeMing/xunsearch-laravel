@@ -62,7 +62,7 @@
 
 添加在 require 中。然后执行命令：`composer update`。
 
-## 使用说明
+# 使用说明
 本包为了方便使用而生，我将所有几种搜索结果统一封装到类文件wrapper/Search.php 中。对官方SDK文档不熟者也可以快速使用。
 
 文件wrapper/Search.php 类继承核心`XS`类,包好所有`XS`类所有方法属性。如未满足你的需求，可根据官方文档进行自定义。
@@ -115,4 +115,41 @@
                  ];
          */
 
+## 示例代码：
 
+- 就以官方demo.ini配置文件为例：
+
+创建索引，需要添加索引的数据直接以数组形式传入即可，一维二维数组均可，默认为立即索引生效，如需更改，可参考$config属性，在实例化数据对象时以第二个参数传入。
+
+            $data=[
+      				['pid'=>1,'subject'=>'关于 xunsearch 的 DEMO 项目测试,项目测试是一个很有意思的行为！','chrono'=>'1314336158'],
+      				['pid'=>2,'subject'=>'测试第二篇,这里是第二篇文章的内容！','chrono'=>'1314336160'],
+      				['pid'=>3,'subject'=>'项目测试第三篇,俗话说，无三不成礼，所以就有了第三篇','chrono'=>'1314336168'],
+      				['pid'=>4,'subject'=>'测试安全第四篇,话说，天下，所以就有了孩子','chrono'=>'1314339868'],
+      				['pid'=>5,'subject'=>'项目测试第五篇,俗气，非常客气，今天你就这样走了','chrono'=>'1315936168'],
+      		];
+            $xs = new \shaozeming\xunsearch\Search('demo');
+      		$xs->addIndex($data);   //创建索引
+
+搜索，默认开启模糊搜索和自动同义词搜索功能（同义词需要自行添加，请参考文档<http://www.xunsearch.com/doc/php/guide/special.synonym>），如需更改，可参考$config属性，在实例化数据对象时以第二个参数传入。
+
+            $xs = new \shaozeming\xunsearch\Search('demo');
+          	$data=$xs->searchAll('搜索世界'); //查询并返回数组
+            /*再次说明返回数据$data格式为：
+            *     [
+            *         'doc'           => $doc,                    //搜索数据结果文档
+            *         'hot'           => $hot,                    //热门词汇
+            *         'count'         => $count,                  //搜索结果统计
+            *         'total'         => $total,                  //数据库总数据
+            *         'corrected'     => $corrected,             //搜索提示
+            *         'related'       => $related,               //相关搜索
+            *         'search_cost'   => $search_cost,          //搜索所用时间
+            *        'total_cost'    => $total_cost,           //页面所用时间
+            *     ];
+            */
+
+请根据自己需要，对放回数据进行操作。
+
+## 说明：
+
+   由于本包主要方向为方便快捷，并未对模型进行封装，不仅仅laravel,所有包含composer框架均可使用。
