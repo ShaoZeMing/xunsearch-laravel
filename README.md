@@ -1,11 +1,12 @@
 # xunsearch-laravel
-- 基于XunSearch（讯搜）sdk的Eloquent模型的全文搜索Laravel 5.*软件包，支持全拼，拼音简写，模糊搜索。
-- 本包包含xunsearch SDK 所有类文件，在使用本包之前，请认真阅读XunSearch官方文档 <http://www.xunsearch.com/doc/>。本包操作基于官方进行修改封装。
+- 基于XunSearch（讯搜）sdk的全文搜索Laravel 5.*包，支持全拼，拼音简写，模糊,同义词搜索。
+- 由于本包主要方向为方便快捷，并未对模型进行封装，不仅仅laravel,所有包含composer框架均可使用。
+- 本包包含xunsearch SDK 所有类文件，在使用本包之前，建议认真阅读XunSearch官方文档 <http://www.xunsearch.com/doc/>。本包操作基于官方进行修改封装。
 - 本包只提供php封装代码，使用本包前，请自行先安装xunsearch服务端程序。帮助文档：<http://www.xunsearch.com/doc/php/guide/start.installation>
 
 ##INI配置文件说明：
 
-如果你开发环境是windows，由于xunsearch服务端只能在linux服务器下运行，你的ini配置文件端口需要加入对应服务端IP地址，如示例代码：
+如果你开发环境是windows或者你php程序并未和xunsearch服务端在同一台服务器上，由于xunsearch服务端只能在linux服务器下运行，你的ini配置文件端口需要加入对应服务端IP地址，如示例代码：
 
     project.name = demo
     project.default_charset = utf-8
@@ -23,7 +24,11 @@
     [chrono]
     type = numeric
 
-请将`192.168.0.110` 修改为你服务端对应的IP。并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start     // 监听在所有本地 IP 地址上`
+++ 注意 ++
+请将`192.168.0.110` 修改为你服务端对应的IP。
+并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
+并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
+并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
 
 在此简要介绍以下几个文件：
 
