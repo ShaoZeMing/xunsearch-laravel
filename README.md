@@ -99,7 +99,7 @@
          * 添加索引数据
          *
          * @author szm19920426@gmail.com
-         * $data array  一维||二维
+         * $data array  一维||二维数组都可以
          * @return object Index索引对象
          */
 ```
@@ -160,4 +160,4 @@
 
 ## 说明：
 
-   由于本包主要方向为方便快捷，并未对模型进行封装，不仅仅laravel,所有包含composer框架均可使用。
+由于本包主要方向为方便快捷，并未对模型进行封装，不仅仅laravel,所有包含composer框架均可使用。
