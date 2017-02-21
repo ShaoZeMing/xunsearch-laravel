@@ -26,9 +26,12 @@
 
 ++ 注意 ++
 请将`192.168.0.110` 修改为你服务端对应的IP。
-并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
-并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
-并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
+
+ - 并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
+ - 并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
+ - 并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
+
+重要的事情说三遍。
 
 在此简要介绍以下几个文件：
 
@@ -50,13 +53,13 @@
 ## 方法 1：
 执行命令
 
-   composer require shaozeming/xunsearch-laravel "dev-master"
+   `composer require shaozeming/xunsearch-laravel "dev-master"`
 
 直接运行composer自动安装代码。
 
 ## 方法 2：
 在项目根目录的下composer.json文件中添加代码 `shaozeming/xunsearch-laravel": "dev-master`
-
+```
      "require": {
             "php": ">=5.6.4",
             "laravel/framework": "5.3.*",
@@ -64,7 +67,7 @@
             "zizaco/entrust": "5.2.x-dev",
             "shaozeming/xunsearch-laravel": "dev-master"
         },
-
+```
 添加在 require 中。然后执行命令：`composer update`。
 
 # 使用说明
@@ -74,24 +77,24 @@
 目前添加属性，方法（持续维护添加）：
 
 属性$config
-
+```
     protected $config = [
         'flushIndex'     => true,       //立即刷新索引
         'setFuzzy'       => true,       //开启模糊搜索
         'autoSynonyms'   => true,       //开启自动同义词搜索功能
     ];
-
+```
 构造方法:public function __construct($file, array $config = [])
-
+```
         /**
         * 添加索引数据
         * @author szm19920426@gmail.com
         * $file string  @object@.ini文件
         * $config array  配置数组,参考属性$config
         */
-
+```
 添加索引方法：public object addIndex(array $data)
-
+```
         /**
          * 添加索引数据
          *
@@ -99,9 +102,9 @@
          * $data array  一维||二维
          * @return object Index索引对象
          */
-
+```
 搜索方法 public function searchAll($string)
-
+```
         /**
          * 搜索方法
          *
@@ -109,23 +112,23 @@
          * $string string  待搜索字符串
          * @return array  返回数组
            return [
-                     'doc'           => $doc,                    //搜索数据结果文档
-                     'hot'           => $hot,                    //热门词汇
-                     'count'         => $count,                  //搜索结果统计
-                     'total'         => $total,                  //数据库总数据
-                     'corrected'     => $corrected,             //搜索提示
-                     'related'       => $related,               //相关搜索
-                     'search_cost'   => $search_cost,          //搜索所用时间
-                     'total_cost'    => $total_cost,           //页面所用时间
+                     'doc'           => Object,      //搜索数据结果文档
+                     'hot'           => array,       //热门词汇
+                     'count'         => int,         //搜索结果统计
+                     'total'         => int,         //数据库总数据
+                     'corrected'     => array,       //搜索提示
+                     'related'       => array,       //相关搜索
+                     'search_cost'   => int,         //搜索所用时间
+                     'total_cost'    => int,         //页面所用时间
                  ];
          */
-
+```
 ## 示例代码：
 
 - 就以官方demo.ini配置文件为例：
 
 创建索引，需要添加索引的数据直接以数组形式传入即可，一维二维数组均可，默认为立即索引生效，如需更改，可参考$config属性，在实例化数据对象时以第二个参数传入。
-
+```
             $data=[
       				['pid'=>1,'subject'=>'关于 xunsearch 的 DEMO 项目测试,项目测试是一个很有意思的行为！','chrono'=>'1314336158'],
       				['pid'=>2,'subject'=>'测试第二篇,这里是第二篇文章的内容！','chrono'=>'1314336160'],
@@ -135,24 +138,24 @@
       		];
             $xs = new \shaozeming\xunsearch\Search('demo');
       		$xs->addIndex($data);   //创建索引
-
+```
 搜索，默认开启模糊搜索和自动同义词搜索功能（同义词需要自行添加，请参考文档<http://www.xunsearch.com/doc/php/guide/special.synonym>），如需更改，可参考$config属性，在实例化数据对象时以第二个参数传入。
-
+```
             $xs = new \shaozeming\xunsearch\Search('demo');
           	$data=$xs->searchAll('搜索世界'); //查询并返回数组
             /*再次说明返回数据$data格式为：
-            *     [
-            *         'doc'           => $doc,                    //搜索数据结果文档
-            *         'hot'           => $hot,                    //热门词汇
-            *         'count'         => $count,                  //搜索结果统计
-            *         'total'         => $total,                  //数据库总数据
-            *         'corrected'     => $corrected,             //搜索提示
-            *         'related'       => $related,               //相关搜索
-            *         'search_cost'   => $search_cost,          //搜索所用时间
-            *        'total_cost'    => $total_cost,           //页面所用时间
-            *     ];
+            $data = [
+                                 'doc'           => Object,      //搜索数据结果文档
+                                 'hot'           => array,       //热门词汇
+                                 'count'         => int,         //搜索结果统计
+                                 'total'         => int,         //数据库总数据
+                                 'corrected'     => array,       //搜索提示
+                                 'related'       => array,       //相关搜索
+                                 'search_cost'   => int,         //搜索所用时间
+                                 'total_cost'    => int,         //页面所用时间
+                             ];
             */
-
+```
 请根据自己需要，对放回数据进行操作。
 
 ## 说明：
