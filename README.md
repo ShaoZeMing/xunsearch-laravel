@@ -53,7 +53,7 @@
 ## 方法 1：
 执行命令
 
-   `composer require shaozeming/xunsearch-laravel "dev-master"`
+   `composer require shaozeming/xunsearch-laravel`
 
 直接运行composer自动安装代码。
 
@@ -65,7 +65,7 @@
             "laravel/framework": "5.3.*",
             "predis/predis": "^1.1",
             "zizaco/entrust": "5.2.x-dev",
-            "shaozeming/xunsearch-laravel": "dev-master"
+            "shaozeming/xunsearch-laravel": "^1.0"
         },
 ```
 添加在 require 中。然后执行命令：`composer update`。
