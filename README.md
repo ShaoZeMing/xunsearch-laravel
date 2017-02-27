@@ -58,7 +58,7 @@
 直接运行composer自动安装代码。
 
 ## 方法 2：
-在项目根目录的下composer.json文件中添加代码 `shaozeming/xunsearch-laravel": "dev-master`
+在项目根目录的下composer.json文件中添加代码 ` shaozeming/xunsearch-laravel": "^1.0`
 ```
      "require": {
             "php": ">=5.6.4",
