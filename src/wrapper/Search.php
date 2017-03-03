@@ -33,6 +33,24 @@ class Search extends \XS
     }
 
     /**
+     * 设置配置属性
+     *
+     * @author szm19920426@gmail.com
+     * $data string  设置配置属性键名
+     * $value bool   设置是否开启
+     * @return mixed
+     */
+     public function setConfig($attr,$value){
+         if(isset($this->config[$attr])){
+             $this->config[$attr]=$value;
+             return $this;
+         }else{
+             return false;
+         }
+     }
+
+
+    /**
      * 添加索引数据
      *
      * @author szm19920426@gmail.com

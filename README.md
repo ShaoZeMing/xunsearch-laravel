@@ -53,25 +53,25 @@
 ## 方法 1：
 执行命令
 
-   `composer require shaozeming/xunsearch-laravel`
+   `composer require shaozeming/xunsearch-laravel "dev-master"`
 
 直接运行composer自动安装代码。
 
 ## 方法 2：
-在项目根目录的下composer.json文件中添加代码 ` shaozeming/xunsearch-laravel": "^1.0`
+在项目根目录的下composer.json文件中添加代码 ` shaozeming/xunsearch-laravel": "dev-master"`
 ```
      "require": {
             "php": ">=5.6.4",
             "laravel/framework": "5.3.*",
             "predis/predis": "^1.1",
             "zizaco/entrust": "5.2.x-dev",
-            "shaozeming/xunsearch-laravel": "^1.0"
+            "shaozeming/xunsearch-laravel": "dev-master"
         },
 ```
 添加在 require 中。然后执行命令：`composer update`。
 
 # 使用说明
-本包为了方便使用而生，我将所有几种搜索结果统一封装到类文件wrapper/Search.php 中。对官方SDK文档不熟者也可以快速使用。
+本包为了简便使用而生，我将所有几种搜索结果统一封装到类文件wrapper/Search.php 中。对官方SDK文档不熟者也可以快速使用。
 
 文件wrapper/Search.php 类继承核心`XS`类,包好所有`XS`类所有方法属性。如未满足你的需求，可根据官方文档进行自定义。
 目前添加属性，方法（持续维护添加）：
@@ -84,6 +84,7 @@
         'autoSynonyms'   => true,       //开启自动同义词搜索功能
     ];
 ```
+
 构造方法:public function __construct($file, array $config = [])
 ```
         /**
@@ -92,6 +93,17 @@
         * $file string  @object@.ini文件
         * $config array  配置数组,参考属性$config
         */
+```
+配置属性方法:public function setConfig($attr,$value)
+```
+          /**
+           * 设置配置属性
+           *
+           * @author szm19920426@gmail.com
+           * $data string  设置配置属性键名
+           * $value bool   设置是否开启
+           * @return mixed
+           */
 ```
 添加索引方法：public object addIndex(array $data)
 ```
@@ -156,7 +168,7 @@
                              ];
             */
 ```
-请根据自己需要，对放回数据进行操作。
+请根据自己需要，对返回数据进行操作。
 
 ## 说明：
 

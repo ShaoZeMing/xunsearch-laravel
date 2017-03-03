@@ -1,6 +1,6 @@
 {
     "name": "shaozeming/xunsearch-laravel",
-    "description": "基于XunSearch（讯搜）sdk的全文搜索Laravel 5.*包，支持全拼，拼音简写，模糊,同义词搜索。",
+    "description": "基于XunSearch（讯搜）sdk的全文搜索Laravel 5.*,Yii1/2,...包，支持全拼，拼音简写，模糊,同义词搜索。支持所有的框架",
     "license": "MIT",
     "authors": [
         {
@@ -9,7 +9,7 @@
             "homepage": "http://www.4d4k.com"
         }
     ],
-    "minimum-stability": "1.0",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3"
     },
