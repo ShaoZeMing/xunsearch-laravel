@@ -115,6 +115,19 @@
          * @return object Index索引对象
          */
 ```
+
+
+更新索引方法：public object updateIndexOne(array $data)
+```
+        /**
+         * 更新索引
+         *
+         * @author szm19920426@gmail.com
+         * $data array  一维
+         * @return object Index索引对象
+         */
+```
+
 搜索方法 public function searchAll($string)
 ```
         /**
@@ -151,6 +164,18 @@
             $xs = new \shaozeming\xunsearch\Search('demo');
       		$xs->addIndex($data);   //创建索引
 ```
+
+更新索引
+```
+            $data=[
+            'pid'=>1,
+            'subject'=>'关于 xunsearch 的 DEMO 项目测试,项目测试不怎么有意思！',
+            'chrono'=>'1314336158'
+            ];
+            $xs = new \shaozeming\xunsearch\Search('demo');
+      		$xs->updateIndexOne($data);   //更新索引
+```
+
 搜索，默认开启模糊搜索和自动同义词搜索功能（同义词需要自行添加，请参考文档<http://www.xunsearch.com/doc/php/guide/special.synonym>），如需更改，可参考$config属性，在实例化数据对象时以第二个参数传入。
 ```
             $xs = new \shaozeming\xunsearch\Search('demo');
