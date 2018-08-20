@@ -53,7 +53,7 @@
 ## 方法 1：
 执行命令
 
-   `composer require shaozeming/xunsearch-laravel "dev-master"`
+   `composer require shaozeming/xunsearch-laravel -v`
 
 直接运行composer自动安装代码。
 
@@ -126,6 +126,27 @@
          * $data array  一维
          * @return object Index索引对象
          */
+```
+
+删除索引方法：public object delIndex($pids)
+```
+    /**
+      * 删除索引文档
+      * User: shaozeming
+      * @param array|string $pids  删除主键值为 $pids 的记录
+      * @return \XSIndex
+      * @throws \XSException
+      */
+```
+
+清空索引方法：public object cleanIndex()
+```
+    /**
+     * 删除索引文档
+     * User: shaozeming
+     * @return \XSIndex
+     */
+     */
 ```
 
 搜索方法 public function searchAll($string)

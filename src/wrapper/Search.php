@@ -18,17 +18,17 @@ namespace shaozeming\xunsearch;
 class Search extends \XS
 {
     protected $config = [
-        'flushIndex'     => true,       //立即刷新索引
-        'setFuzzy'       => true,       //开启模糊搜索
-        'autoSynonyms'   => true,       //开启自动同义词搜索功能
+        'flushIndex' => true,       //立即刷新索引
+        'setFuzzy' => true,       //开启模糊搜索
+        'autoSynonyms' => true,       //开启自动同义词搜索功能
     ];
 
     public function __construct($file, array $config = [])
     {
         parent::__construct($file);
 
-        if(!empty($config)){
-            $this->config = array_merge($this->config,$config);
+        if (!empty($config)) {
+            $this->config = array_merge($this->config, $config);
         }
     }
 
@@ -40,14 +40,15 @@ class Search extends \XS
      * $value bool   设置是否开启
      * @return mixed
      */
-     public function setConfig($attr,$value){
-         if(isset($this->config[$attr])){
-             $this->config[$attr]=$value;
-             return $this;
-         }else{
-             return false;
-         }
-     }
+    public function setConfig($attr, $value)
+    {
+        if (isset($this->config[$attr])) {
+            $this->config[$attr] = $value;
+            return $this;
+        } else {
+            return false;
+        }
+    }
 
 
     /**
@@ -79,9 +80,9 @@ class Search extends \XS
 
         return $this->getIndex();
     }
-    
-    
-        /**
+
+
+    /**
      * 更新索引数据
      *
      * @author szm19920426@gmail.com
@@ -96,7 +97,7 @@ class Search extends \XS
         if (count($data) == count($data, 1)) {
             // 一维数组
             $this->getIndex()->update(new \XSDocument($data));
-        } 
+        }
 
         //索引是否立即生效
         if ($this->config['flushIndex']) {
@@ -105,8 +106,45 @@ class Search extends \XS
 
         return $this->getIndex();
     }
-    
-    
+
+
+
+
+    /**
+     * 删除索引文档
+     * User: shaozeming
+     * @param array|string $pids  删除主键值为 $pids 的记录
+     * @return \XSIndex
+     * @throws \XSException
+     */
+    public function delIndex($pids)
+    {
+
+        if (!$pids) {
+            throw new \XSException('参数错误！');
+        }
+
+        $this->getIndex()->del($pids);
+
+        if ($this->config['flushIndex']) {
+            $this->getIndex()->flushIndex();
+        }
+
+        return $this->getIndex();
+    }
+
+
+    /**
+     * User: shaozeming
+     * @return \XSIndex
+     */
+    public function cleanIndex()
+    {
+
+        return  $this->getIndex()->clean();
+
+    }
+
 
     /**
      * 搜索方法
@@ -163,14 +201,14 @@ class Search extends \XS
         $total_cost = microtime(true) - $total_begin;
 
         return [
-            'doc'           => $doc,                    //搜索数据结果文档
-            'hot'           => $hot,                    //热门词汇
-            'count'         => $count,                  //搜索结果统计
-            'total'         => $total,                  //数据库总数据
-            'corrected'     => $corrected,             //搜索提示
-            'related'       => $related,               //相关搜索
-            'search_cost'   => $search_cost,          //搜索所用时间
-            'total_cost'    => $total_cost,           //页面所用时间
+            'doc' => $doc,                    //搜索数据结果文档
+            'hot' => $hot,                    //热门词汇
+            'count' => $count,                  //搜索结果统计
+            'total' => $total,                  //数据库总数据
+            'corrected' => $corrected,             //搜索提示
+            'related' => $related,               //相关搜索
+            'search_cost' => $search_cost,          //搜索所用时间
+            'total_cost' => $total_cost,           //页面所用时间
         ];
 
 
