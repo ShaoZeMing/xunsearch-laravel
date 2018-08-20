@@ -79,6 +79,34 @@ class Search extends \XS
 
         return $this->getIndex();
     }
+    
+    
+        /**
+     * 更新索引数据
+     *
+     * @author szm19920426@gmail.com
+     * $data array  一维
+     * @return mixed
+     */
+    public function updateIndexOne(array $data)
+    {
+        if (!array($data)) {
+            die('参数错误！');
+        }
+        if (count($data) == count($data, 1)) {
+            // 一维数组
+            $this->getIndex()->update(new \XSDocument($data));
+        } 
+
+        //索引是否立即生效
+        if ($this->config['flushIndex']) {
+            $this->getIndex()->flushIndex();
+        }
+
+        return $this->getIndex();
+    }
+    
+    
 
     /**
      * 搜索方法
