@@ -1,6 +1,9 @@
 # xunsearch-laravel
 
 
+- 旧版本请访问 v1.0[https://github.com/ShaoZeMing/xunsearch-laravel/tree/v1.0.1]
+
+
 ## 前置说明：
 
 ### 请先安装xunsearch 服务端：

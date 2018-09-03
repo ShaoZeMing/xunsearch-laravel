@@ -12,7 +12,7 @@ use ShaoZeMing\Translate\TranslateService;
 use ShaoZeMing\Xunsearch\XunsearchService;
 
 
-class TranslateTest extends TestCase
+class Xunsearch extends TestCase
 {
     protected $instance;
 
