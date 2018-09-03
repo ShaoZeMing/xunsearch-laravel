@@ -1,221 +1,219 @@
 # xunsearch-laravel
-- 基于XunSearch（讯搜）sdk的全文搜索Laravel 5.*包，支持全拼，拼音简写，模糊,同义词搜索。
-- 由于本包主要方向为方便快捷，并未对模型进行封装，不仅仅laravel,所有包含composer框架均可使用。
-- 本包包含xunsearch SDK 所有类文件，在使用本包之前，建议认真阅读XunSearch官方文档 <http://www.xunsearch.com/doc/>。本包操作基于官方进行修改封装。
-- 本包只提供php封装代码，使用本包前，请自行先安装xunsearch服务端程序。帮助文档：<http://www.xunsearch.com/doc/php/guide/start.installation>
 
-##INI配置文件说明：
 
-如果你开发环境是windows或者你php程序并未和xunsearch服务端在同一台服务器上，由于xunsearch服务端只能在linux服务器下运行，你的ini配置文件端口需要加入对应服务端IP地址，如示例代码：
+## 前置说明：
 
-    project.name = demo
-    project.default_charset = utf-8
-    server.index = 192.168.0.110:8383
-    server.search = 192.168.0.110:8384
-    [pid]
-    type = id
+### 请先安装xunsearch 服务端：
 
-    [subject]
-    type = title
+- 普通编译安装
 
-    [message]
-    type = body
-
-    [chrono]
-    type = numeric
-
-++ 注意 ++
-请将`192.168.0.110` 修改为你服务端对应的IP。
-
- - 并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
- - 并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
- - 并且服务端启动xs-ctl.sh服务时，启动命令应为： `bin/xs-ctl.sh -b inet start`     // 监听在所有本地 IP 地址上
-
-重要的事情说三遍。
-
-在此简要介绍以下几个文件：
-
-    - app/demo.php           配置文件样例，请根据自己实际项目更改
-    - lib/XS.php             入口文件，所有搜索功能必须包含此文件
-    - util/RequireCheck.php  命令行运行，用于检测您的 PHP 环境是否符合运行条件
-    - util/IniWizzaard.php   命令行运行，用于帮助您编写 xunsearch 项目配置文件
-    - util/Quest.php         命令行运行，搜索测试工具
-    - util/Indexer.php       命令行运行，索引管理工具
-    - util/SearchSkel.php    命令行运行，根据配置文件生成搜索骨架代码
-    - util/xs                命令行工具统一入口
-    - wrapper/Search.php     继承XS封装类，利用本类快速操作数据。
-
- - 在开始编写您的代码前强烈建议执行 util/RequireCheck.php 以检查环境。
-
-# 安装本包
- - 本包虽然针对laravel5.*框架进行封装，当然其他带composer框架同样可以使用。
-
-## 方法 1：
-执行命令
-
-   `composer require shaozeming/xunsearch-laravel -v`
-
-直接运行composer自动安装代码。
-
-## 方法 2：
-在项目根目录的下composer.json文件中添加代码 ` shaozeming/xunsearch-laravel": "dev-master"`
-```
-     "require": {
-            "php": ">=5.6.4",
-            "laravel/framework": "5.3.*",
-            "predis/predis": "^1.1",
-            "zizaco/entrust": "5.2.x-dev",
-            "shaozeming/xunsearch-laravel": "dev-master"
-        },
-```
-添加在 require 中。然后执行命令：`composer update`。
-
-# 使用说明
-本包为了简便使用而生，我将所有几种搜索结果统一封装到类文件wrapper/Search.php 中。对官方SDK文档不熟者也可以快速使用。
-
-文件wrapper/Search.php 类继承核心`XS`类,包好所有`XS`类所有方法属性。如未满足你的需求，可根据官方文档进行自定义。
-目前添加属性，方法（持续维护添加）：
-
-属性$config
-```
-    protected $config = [
-        'flushIndex'     => true,       //立即刷新索引
-        'setFuzzy'       => true,       //开启模糊搜索
-        'autoSynonyms'   => true,       //开启自动同义词搜索功能
-    ];
 ```
 
-构造方法:public function __construct($file, array $config = [])
+wget http://www.xunsearch.com/download/xunsearch-full-latest.tar.bz2
+tar -xjf xunsearch-full-latest.tar.bz2
+
+cd xunsearch-full-1.4.0/
+sh setup.sh  
+//第一次安装的话，过程可能会稍显漫长，请不必着急，您大可泡杯茶一边喝一边等待即可。
+               
+cd $prefix ; bin/xs-ctl.sh restart
+
+
+更多详情请移步：http://www.xunsearch.com/doc/php/guide/start.installation
 ```
-        /**
-        * 添加索引数据
-        * @author szm19920426@gmail.com
-        * $file string  @object@.ini文件
-        * $config array  配置数组,参考属性$config
-        */
-```
-配置属性方法:public function setConfig($attr,$value)
-```
-          /**
-           * 设置配置属性
-           *
-           * @author szm19920426@gmail.com
-           * $data string  设置配置属性键名
-           * $value bool   设置是否开启
-           * @return mixed
-           */
-```
-添加索引方法：public object addIndex(array $data)
-```
-        /**
-         * 添加索引数据
-         *
-         * @author szm19920426@gmail.com
-         * $data array  一维||二维数组都可以
-         * @return object Index索引对象
-         */
+
+- docker 安装
+```$xslt
+Docker 方式安装服务端
+---------------------
+
+//下载映像：
+
+docker pull hightman/xunsearch
+
+//启动映像：
+
+docker run --name xunsearch -d \
+-p 8383:8383 -p 8384:8384 \
+-v /var/xunsearch/data:/usr/local/xunsearch/data \
+hightman/xunsearch:latest
+
+//以上启动参数可自行修改，该方式仅运行服务端
+
 ```
 
 
-更新索引方法：public object updateIndexOne(array $data)
+
+## Installing
+
+```shell
+$ composer require shaozeming/xunsearch-laravel -v
 ```
-        /**
-         * 更新索引
-         *
-         * @author szm19920426@gmail.com
-         * $data array  一维
-         * @return object Index索引对象
-         */
+### Laravel
+
+
+
+```php
+// config/app.php
+
+    'providers' => [
+        //...
+        ShaoZeMing\LaravelTranslate\TranslateServiceProvider::class,    //This is default in laravel 5.5
+    ],
 ```
 
-删除索引方法：public object delIndex($pids)
-```
-    /**
-      * 删除索引文档
-      * User: shaozeming
-      * @param array|string $pids  删除主键值为 $pids 的记录
-      * @return \XSIndex
-      * @throws \XSException
-      */
+And publish the config file: 
+
+```shell
+$ php artisan vendor:publish --provider=ShaoZeMing\\LaravelTranslate\\TranslateServiceProvider
 ```
 
-清空索引方法：public object cleanIndex()
-```
-    /**
-     * 删除索引文档
-     * User: shaozeming
-     * @return \XSIndex
-     */
-     */
+if you want to use facade mode, you can register a facade name what you want to use, for example `translate`: 
+
+```php
+// config/app.php
+
+    'aliases' => [
+        'Translate' => ShaoZeMing\LaravelTranslate\Facade\Translate::class,   //This is default in laravel 5.5
+    ],
 ```
 
-搜索方法 public function searchAll($string)
-```
-        /**
-         * 搜索方法
-         *
-         * @author szm19920426@gmail.com
-         * $string string  待搜索字符串
-         * @return array  返回数组
-           return [
-                     'doc'           => Object,      //搜索数据结果文档
-                     'hot'           => array,       //热门词汇
-                     'count'         => int,         //搜索结果统计
-                     'total'         => int,         //数据库总数据
-                     'corrected'     => array,       //搜索提示
-                     'related'       => array,       //相关搜索
-                     'search_cost'   => int,         //搜索所用时间
-                     'total_cost'    => int,         //页面所用时间
-                 ];
-         */
-```
-## 示例代码：
+### lumen
 
-- 就以官方demo.ini配置文件为例：
+- 在 bootstrap/app.php 中 82 行左右：
+```
+$app->register( ShaoZeMing\LaravelTranslate\TranslateServiceProvider::class);
+```
+将 `vendor/ShaoZeMing/laravel-translate/config/translate.php` 拷贝到项目根目录`/config`目录下，并将文件名改成`translate.php`。
 
-创建索引，需要添加索引的数据直接以数组形式传入即可，一维二维数组均可，默认为立即索引生效，如需更改，可参考$config属性，在实例化数据对象时以第二个参数传入。
-```
-            $data=[
-      				['pid'=>1,'subject'=>'关于 xunsearch 的 DEMO 项目测试,项目测试是一个很有意思的行为！','chrono'=>'1314336158'],
-      				['pid'=>2,'subject'=>'测试第二篇,这里是第二篇文章的内容！','chrono'=>'1314336160'],
-      				['pid'=>3,'subject'=>'项目测试第三篇,俗话说，无三不成礼，所以就有了第三篇','chrono'=>'1314336168'],
-      				['pid'=>4,'subject'=>'测试安全第四篇,话说，天下，所以就有了孩子','chrono'=>'1314339868'],
-      				['pid'=>5,'subject'=>'项目测试第五篇,俗气，非常客气，今天你就这样走了','chrono'=>'1315936168'],
-      		];
-            $xs = new \shaozeming\xunsearch\Search('demo');
-      		$xs->addIndex($data);   //创建索引
-```
 
-更新索引
+### configuration 
+
 ```
-            $data=[
-            'pid'=>1,
-            'subject'=>'关于 xunsearch 的 DEMO 项目测试,项目测试不怎么有意思！',
-            'chrono'=>'1314336158'
-            ];
-            $xs = new \shaozeming\xunsearch\Search('demo');
-      		$xs->updateIndexOne($data);   //更新索引
+// config/demo.ini
+project.name = teachers  //名称，建议和文件同名
+project.default_charset = utf-8   //字符编码
+server.index = 127.0.0.1:8383     //xunsearch 服务器ip:端口
+server.search = 127.0.0.1:8384    //xunsearch 服务器ip:端口
+
+//字段类型配置请参考 http://www.xunsearch.com/doc/php/guide/ini.guide
+[id]
+type = id           
+
+[email]
+index = mixed
+
+[name]
+index = mixed
+
+[lesson]
+index = mixed
+
+[desc]
+index = mixed
+
 ```
 
-搜索，默认开启模糊搜索和自动同义词搜索功能（同义词需要自行添加，请参考文档<http://www.xunsearch.com/doc/php/guide/special.synonym>），如需更改，可参考$config属性，在实例化数据对象时以第二个参数传入。
-```
-            $xs = new \shaozeming\xunsearch\Search('demo');
-          	$data=$xs->searchAll('搜索世界'); //查询并返回数组
-            /*再次说明返回数据$data格式为：
-            $data = [
-                                 'doc'           => Object,      //搜索数据结果文档
-                                 'hot'           => array,       //热门词汇
-                                 'count'         => int,         //搜索结果统计
-                                 'total'         => int,         //数据库总数据
-                                 'corrected'     => array,       //搜索提示
-                                 'related'       => array,       //相关搜索
-                                 'search_cost'   => int,         //搜索所用时间
-                                 'total_cost'    => int,         //页面所用时间
-                             ];
-            */
-```
-请根据自己需要，对返回数据进行操作。
 
-## 说明：
 
-由于本包主要方向为方便快捷，并未对模型进行封装，不仅仅laravel,所有包含composer框架均可使用。
+Example:
+
+```php
+// 配置文件
+
+        //define('XS_APP_ROOT', 'your/ini_file_path/dir/');  //可以定义配置文件目录
+        //$xs = new XunsearchService('demo');
+
+        //也可以直接传入ini文件
+       $file = your/ini_file_path/dir/demo.ini
+       $xs = new XunsearchService($file);
+       $data =[
+            ['id' => 1, 'email' => '928240096@qq.com', 'name' => 'Shao ZeMing 邵泽明 邵澤明', 'lesson' => '朗诵主持,Reciting Hosting,朗誦主持，','desc'=>'我是谁，我在哪儿，我要做什么，我不告诉你'],
+            ['id' => 2, 'email' => '12315@qq.com', 'name' => 'Chris Dong 董胜君  董勝君', 'lesson' => '朗诵主持,Reciting Hosting,朗誦主持，演講辯論，speech debate，演讲辩论','desc'=>'如果有一天，我走了，你应该知道我去了哪儿'],
+            ['id' => 3, 'email' => 'shao-ze-ming@outlook.com', 'name' => '二傻子 Two fools', 'lesson' => '朗诵主持,Reciting Hosting,朗誦主持，','desc'=>'最近头发掉的厉害，我该怎么办好呀'],
+            ['id' => 4, 'email' => 'szm19920426@qq.com', 'name' => '君莫笑 jun mo xiao 君莫笑', 'lesson' => '写作批改,writing correction,寫作批改,国学经典,National Classics,國學經典','desc'=>'哎呀，脑壳疼，脑壳疼，脑壳疼'],
+            ['id' => 5, 'email' => '1270912585@qq.com', 'name' => '李四，li si 李四', 'lesson' => '朗诵主持,Reciting Hosting,朗誦主持，演講辯論，speech debate，演讲辩论，国学经典,National Classics,國學經典','desc'=>'你知道我对你不静静是喜欢'],
+        ];
+         
+        $result =  $xs->addIndex($data);  //添加索引
+        $result = $xs->search('泽明');   //搜索
+        
+        //$newData=[....]
+        //$result =  $xs->updateIndex($newData);  //更新单挑或多条索引
+        //$result =  $xs->delIndex('3');  //删除单挑或多条索引
+        //$result =  $xs->cleanIndex();   //清空索引
+
+ print_r($result);
+  * @return array  返回数组结构
+            return [
+                      'doc'           => Object,      //搜索数据结果文档
+                      'hot'           => array,       //热门词汇
+                      'count'         => int,         //搜索结果统计
+                      'total'         => int,         //数据库总数据
+                      'corrected'     => array,       //搜索提示
+                      'related'       => array,       //相关搜索
+                      'search_cost'   => int,         //搜索所用时间
+                      'total_cost'    => int,         //页面所用时间
+                  ];
+          */
+ 
+
+ 
+ /*
+ 示例结果：
+Array
+(
+    [doc] => Array
+        (
+            [0] => XSDocument Object
+                (
+                    [_data:XSDocument:private] => Array
+                        (
+                            [id] => 1
+                            [email] => 928240096@qq.com
+                            [name] => Shao ZeMing 邵泽明 邵澤明
+                            [lesson] => 朗诵主持,Reciting Hosting,朗誦主持，
+                            [desc] => 我是谁，我在哪儿，我要做什么，我不告诉你
+                            [255] => 
+                        )
+
+                    [_terms:XSDocument:private] => 
+                    [_texts:XSDocument:private] => 
+                    [_charset:XSDocument:private] => UTF-8
+                    [_meta:XSDocument:private] => Array
+                        (
+                            [docid] => 1
+                            [rank] => 1
+                            [ccount] => 0
+                            [percent] => 100
+                            [weight] => 1.1440536975861
+                        )
+
+                )
+
+        )
+
+    [hot] => Array
+        (
+        )
+
+    [count] => 1
+    [total] => 5
+    [corrected] => Array
+        (
+        )
+
+    [related] => Array
+        (
+        )
+
+    [search_cost] => 0.00080204010009766
+    [total_cost] => 0.004767894744873
+)
+ */
+
+```
+
+## License
+
+MIT
