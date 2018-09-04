@@ -1,8 +1,8 @@
 # xunsearch-laravel
 ---
-[![](https://travis-ci.org/ShaoZeMing/laravel-translate.svg?branch=master)](https://travis-ci.org/ShaoZeMing/laravel-translate) 
-[![](https://img.shields.io/packagist/v/ShaoZeMing/laravel-translate.svg)](https://packagist.org/packages/shaozeming/laravel-translate) 
-[![](https://img.shields.io/packagist/dt/ShaoZeMing/laravel-translate.svg)](https://packagist.org/packages/stichoza/shaozeming/laravel-translate)
+[![](https://travis-ci.org/ShaoZeMing/xunsearch-laravel.svg?branch=master)](https://travis-ci.org/ShaoZeMing/xunsearch-laravel) 
+[![](https://img.shields.io/packagist/v/ShaoZeMing/xunsearch-laravel.svg)](https://packagist.org/packages/shaozeming/xunsearch-laravel) 
+[![](https://img.shields.io/packagist/dt/ShaoZeMing/xunsearch-laravel.svg)](https://packagist.org/packages/stichoza/shaozeming/xunsearch-laravel)
 
 
 - 旧版本请访问 v1.0[https://github.com/ShaoZeMing/xunsearch-laravel/tree/v1.0.1]
