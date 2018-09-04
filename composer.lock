@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8bfb0e5e49f52985efca616f2468e589",
+    "content-hash": "da23fa45c38db6dd43be2409fb5c5b93",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1000,7 +1000,7 @@
         },
         {
             "name": "shaozeming/xunsearch",
-            "version": "dev-master",
+            "version": "v1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ShaoZeMing/xunsearch.git",
@@ -4004,9 +4004,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "shaozeming/xunsearch": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

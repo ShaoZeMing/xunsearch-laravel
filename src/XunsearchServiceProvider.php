@@ -43,8 +43,9 @@ class XunsearchServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        define('XS_APP_ROOT', config_path());
         $this->app->singleton(XunsearchService::class, function ($app) {
-            return new XunsearchService($app->config->get('xunsearch', []));
+            return new XunsearchService('xunsearch');
         });
         $this->app->alias(XunsearchService::class, 'xunsearch');
 
