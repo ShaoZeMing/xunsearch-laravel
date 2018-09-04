@@ -32,7 +32,7 @@ class XunsearchServiceProvider extends ServiceProvider
         } elseif ($this->app instanceof LumenApplication) {
             $this->app->configure('xunsearch');
         }
-        $this->mergeConfigFrom($source, 'xunsearch');
+//        $this->mergeConfigFrom($source, 'xunsearch');
 
     }
 
