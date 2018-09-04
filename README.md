@@ -65,23 +65,23 @@ $ composer require shaozeming/xunsearch-laravel -v
 
     'providers' => [
         //...
-        ShaoZeMing\LaravelTranslate\TranslateServiceProvider::class,    //This is default in laravel 5.5
+        ShaoZeMing\Laravelxunsearch\XunsearchServiceProvider::class,    //This is default in laravel 5.5
     ],
 ```
 
 And publish the config file: 
 
 ```shell
-$ php artisan vendor:publish --provider=ShaoZeMing\\LaravelTranslate\\TranslateServiceProvider
+$ php artisan vendor:publish --provider=ShaoZeMing\\LaravelXunsearch\\XunsearchServiceProvider
 ```
 
-if you want to use facade mode, you can register a facade name what you want to use, for example `translate`: 
+if you want to use facade mode, you can register a facade name what you want to use, for example `xunsearch`: 
 
 ```php
 // config/app.php
 
     'aliases' => [
-        'Translate' => ShaoZeMing\LaravelTranslate\Facade\Translate::class,   //This is default in laravel 5.5
+        'xunsearch' => ShaoZeMing\LaravelXunsearch\Facade\Xunsearch::class,   //This is default in laravel 5.5
     ],
 ```
 
@@ -89,9 +89,9 @@ if you want to use facade mode, you can register a facade name what you want to 
 
 - 在 bootstrap/app.php 中 82 行左右：
 ```
-$app->register( ShaoZeMing\LaravelTranslate\TranslateServiceProvider::class);
+$app->register( ShaoZeMing\LaravelXunsearch\xunsearchServiceProvider::class);
 ```
-将 `vendor/ShaoZeMing/laravel-translate/config/translate.php` 拷贝到项目根目录`/config`目录下，并将文件名改成`translate.php`。
+将 `vendor/ShaoZeMing/laravel-xunsearch/config/xunsearch.ini` 拷贝到项目根目录`/config`目录下，并将文件名改成`xunsearch.ini`。
 
 
 ### configuration 
@@ -128,8 +128,7 @@ Example:
 ```php
 // 配置文件
 
-        //define('XS_APP_ROOT', 'your/ini_file_path/dir/');  //可以定义配置文件目录
-        //$xs = new XunsearchService('demo');
+
 
         //也可以直接传入ini文件
        $file = your/ini_file_path/dir/demo.ini
@@ -142,15 +141,24 @@ Example:
             ['id' => 5, 'email' => '1270912585@qq.com', 'name' => '李四，li si 李四', 'lesson' => '朗诵主持,Reciting Hosting,朗誦主持，演講辯論，speech debate，演讲辩论，国学经典,National Classics,國學經典','desc'=>'你知道我对你不静静是喜欢'],
         ];
          
-        $result =  $xs->addIndex($data);  //添加索引
-        $result = $xs->search('泽明');   //搜索
-        
-        //$newData=[....]
-        //$result =  $xs->updateIndex($newData);  //更新单挑或多条索引
-        //$result =  $xs->delIndex('3');  //删除单挑或多条索引
-        //$result =  $xs->cleanIndex();   //清空索引
 
- print_r($result);
+//        Xunsearch::addIndex($data);  //添加索引
+        
+//        $data = ['id'=>1,'email'=>'123456@ming.com'];
+//        Xunsearch::updateIndex($data); 更新索引
+        
+//        Xunsearch::delIndex($ids); 删除索引
+        
+//        Xunsearch::cleanIndex(); 清空索引
+        
+        
+//        $res = Xunsearch::search('朗诵');    //默认搜索
+//        $res = Xunsearch::setLimit(15)->search('朗诵');  //搜索每页条数
+        $res = Xunsearch::setSort('id',true)->setLimit(15)->search('朗诵');  //搜索排序
+
+
+
+ print_r($res);
   * @return array  返回数组结构
             return [
                       'doc'           => Object,      //搜索数据结果文档
