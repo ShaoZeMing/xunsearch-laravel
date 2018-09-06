@@ -145,7 +145,7 @@ Example:
 //        Xunsearch::addIndex($data);  //添加索引
         
 //        $data = ['id'=>1,'email'=>'123456@ming.com'];
-//        Xunsearch::updateIndex($data); 更新索引
+//        Xunsearch::updateIndexOne($data); 更新索引
         
 //        Xunsearch::delIndex($ids); 删除索引
         
