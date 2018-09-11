@@ -200,8 +200,8 @@ use ShaoZeMing\LaravelXunsearch\Facade\Xunsearch;
                       'total'         => int,         //数据库总数据
                       'corrected'     => array,       //搜索提示
                       'related'       => array,       //相关搜索
-                      'search_cost'   => int,         //搜索所用时间
-                      'total_cost'    => int,         //页面所用时间
+                      'search_cost'   => float,         //搜索所用时间
+                      'total_cost'    => float,         //页面所用时间
                   ];
           */
  
