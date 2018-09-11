@@ -12,14 +12,14 @@
 
 ### 请先安装xunsearch 服务端：
 
-- 普通编译安装
+- 普通编译安装(推荐)
 
 ```
 
 wget http://www.xunsearch.com/download/xunsearch-full-latest.tar.bz2
 tar -xjf xunsearch-full-latest.tar.bz2
 
-cd xunsearch-full-1.4.11/
+cd xunsearch-full-1.4.11/     //下载的版本文件夹
 sh setup.sh  
 //第一次安装的话，过程可能会稍显漫长，请不必着急，您大可泡杯茶一边喝一边等待即可。
                
@@ -91,43 +91,75 @@ if you want to use facade mode, you can register a facade name what you want to 
 ```
 $app->register( ShaoZeMing\LaravelXunsearch\xunsearchServiceProvider::class);
 ```
-将 `vendor/ShaoZeMing/laravel-xunsearch/config/xunsearch.ini` 拷贝到项目根目录`/config`目录下，并将文件名改成`xunsearch.ini`。
+将 `vendor/ShaoZeMing/laravel-xunsearch/config/xunsearch.php` 拷贝到项目根目录`/config`目录下，并将文件名改成`xunsearch.php`。
 
 
 ### configuration 
 
+-  老师搜索库配置 配置结构和官方ini文件类似，只不过替换为了php 数组形式方式展示，请照着官方文档和本配置文件对比，葫芦画瓢：http://www.xunsearch.com/doc/php/guide/ini.guide
+
+```php
+// config/xunsearch.php
+
+   
+    'default' => 'teacher',   //默认搜索库
+
+    'databases' => [
+
+//        老师搜索库配置 配置结构和官方ini文件类似，只不过替换为了php 数组形式方式展示，请照着官方文档和本配置文件对比，葫芦画瓢：http://www.xunsearch.com/doc/php/guide/ini.guide
+        'teacher' => [
+            'project.name' => 'teacher',
+            'project.default_charset' => 'utf-8',
+            'server.index' => '127.0.0.1:8383',
+            'server.search' => '127.0.0.1:8384',
+            'id' => [
+                'type' => 'id',
+            ],
+            'email' => [
+                'index' => 'mixed',
+            ],
+            'name' => [
+                'index' => 'mixed',
+            ],
+            'desc' => [
+                'index' => 'mixed',
+            ],
+
+        ],
+
+
+        //学生搜索库
+        'student' => [
+            'project.name' => 'student',
+            'project.default_charset' => 'utf-8',
+            'server.index' => '127.0.0.1:8383',
+            'server.search' => '127.0.0.1:8384',
+            'id' => [
+                'type' => 'id',
+            ],
+            'email' => [
+                'index' => 'mixed',
+            ],
+            'name' => [
+                'index' => 'mixed',
+            ],
+            'desc' => [
+                'index' => 'mixed',
+            ],
+
+        ],
+
+
+//        ... 更多
+    ],
+
 ```
-// config/demo.ini
-project.name = teachers  //名称，建议和文件同名
-project.default_charset = utf-8   //字符编码
-server.index = 127.0.0.1:8383     //xunsearch 服务器ip:端口
-server.search = 127.0.0.1:8384    //xunsearch 服务器ip:端口
-
-//字段类型配置请参考 http://www.xunsearch.com/doc/php/guide/ini.guide
-[id]
-type = id           
-
-[email]
-index = mixed
-
-[name]
-index = mixed
-
-[lesson]
-index = mixed
-
-[desc]
-index = mixed
-
-```
-
 
 
 Example:
 
 ```php
 // 配置文件
-
 
 
         //也可以直接传入ini文件
@@ -143,18 +175,23 @@ Example:
          
 
 //        Xunsearch::addIndex($data);  //添加索引
+//        Xunsearch::setDatabase('student')->addIndex($data);  //添加自定义索引数据库索引
         
 //        $data = ['id'=>1,'email'=>'123456@ming.com'];
 //        Xunsearch::updateIndexOne($data); 更新索引
+//        Xunsearch::setDatabase('student')->updateIndexOne($data); 更新自定义索引数据库索引
         
 //        Xunsearch::delIndex($ids); 删除索引
+//        Xunsearch::setDatabase('student')->delIndex($ids); 删除自定义索引数据库索引
         
 //        Xunsearch::cleanIndex(); 清空索引
+//        Xunsearch::setDatabase('student')->cleanIndex(); 清空自定义索引数据库索引
         
         
 //        $res = Xunsearch::search('朗诵');    //默认搜索
 //        $res = Xunsearch::setLimit(15)->search('朗诵');  //搜索每页条数
-        $res = Xunsearch::setSort('id',true)->setLimit(15)->search('朗诵');  //搜索排序
+//        $res = Xunsearch::setSort('id',true)->setLimit(15)->search('朗诵');  //搜索排序
+          $res = Xunsearch::setDatabase('student')->setLimit(15)->search('朗诵');  //设置索引数据库
 
 
 

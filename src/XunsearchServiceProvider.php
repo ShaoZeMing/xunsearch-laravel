@@ -25,14 +25,14 @@ class XunsearchServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        $source = realpath(dirname(__DIR__).'/config/xunsearch.ini');
+        $source = realpath(dirname(__DIR__).'/config/xunsearch.php');
 
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
-            $this->publishes([$source => config_path('xunsearch.ini')]);
+            $this->publishes([$source => config_path('xunsearch.php')]);
         } elseif ($this->app instanceof LumenApplication) {
             $this->app->configure('xunsearch');
         }
-//        $this->mergeConfigFrom($source, 'xunsearch');
+        $this->mergeConfigFrom($source, 'xunsearch');
 
     }
 
@@ -45,7 +45,7 @@ class XunsearchServiceProvider extends ServiceProvider
     {
         defined('XS_APP_ROOT') || define('XS_APP_ROOT', config_path());
         $this->app->singleton(XunsearchService::class, function ($app) {
-            return new XunsearchService('xunsearch');
+            return new XunsearchService();
         });
         $this->app->alias(XunsearchService::class, 'xunsearch');
     }
