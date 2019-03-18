@@ -30,9 +30,8 @@ cd $prefix ; bin/xs-ctl.sh restart
 ```
 
 - docker 安装
-```$xslt
+```
 Docker 方式安装服务端
----------------------
 
 //下载映像：
 
@@ -65,7 +64,7 @@ $ composer require shaozeming/xunsearch-laravel -v
 
     'providers' => [
         //...
-        ShaoZeMing\Laravelxunsearch\XunsearchServiceProvider::class,    //This is default in laravel 5.5
+        ShaoZeMing\LaravelXunsearch\XunsearchServiceProvider::class,    //This is default in laravel 5.5
     ],
 ```
 
@@ -89,7 +88,7 @@ if you want to use facade mode, you can register a facade name what you want to 
 
 - 在 bootstrap/app.php 中 82 行左右：
 ```
-$app->register( ShaoZeMing\LaravelXunsearch\xunsearchServiceProvider::class);
+$app->register( ShaoZeMing\LaravelXunsearch\XunsearchServiceProvider::class);
 ```
 将 `vendor/ShaoZeMing/laravel-xunsearch/config/xunsearch.php` 拷贝到项目根目录`/config`目录下，并将文件名改成`xunsearch.php`。
 
