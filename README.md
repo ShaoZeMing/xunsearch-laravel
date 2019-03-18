@@ -12,7 +12,7 @@
 
 ### 请先安装xunsearch 服务端：
 
-- 普通编译安装(推荐)
+- 普通编译安装
 
 ```
 
@@ -29,8 +29,9 @@ cd $prefix ; bin/xs-ctl.sh restart
 更多详情请移步：http://www.xunsearch.com/doc/php/guide/start.installation
 ```
 
-- docker 安装
-```
+
+- docker 安装(推荐,可减少环境问题，但你需要安装docker)
+```$xslt
 Docker 方式安装服务端
 
 //下载映像：
@@ -51,6 +52,8 @@ hightman/xunsearch:latest
 
 
 ## Installing
+
+- 非laravel框架请使用 https://github.com/ShaoZeMing/xunsearch
 
 ```shell
 $ composer require shaozeming/xunsearch-laravel -v
