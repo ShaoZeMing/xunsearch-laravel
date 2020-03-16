@@ -1,6 +1,6 @@
 {
     "name": "shaozeming/xunsearch-laravel",
-    "description": "基于XunSearch（讯搜）sdk的全文搜索Laravel 5.*,6.*，支持全拼，拼音简写，模糊,同义词搜索",
+    "description": "基于XunSearch（讯搜）sdk的全文搜索Laravel 5.*，支持全拼，拼音简写，模糊,同义词搜索",
     "license": "MIT",
     "authors": [
         {
@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
-        "illuminate/container": "^6.0",
+        "php": ">=5.6",
+        "illuminate/container": ">=5.1",
         "shaozeming/xunsearch": "~3.0"
     },
     "require-dev": {
